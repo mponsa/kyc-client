@@ -5,17 +5,17 @@ class KYC_ERROR extends Error {
     }
 }
 
-class MISSING_PARAMETERS extends KYC_ERROR {
+class INVALID_PARAMETERS_ERROR extends KYC_ERROR {
     constructor(message: string) {
         super(message);
     }   
 }
 
-class VERIFY_DOCUMENT extends KYC_ERROR {
+class VERIFY_DOCUMENT_ERROR extends KYC_ERROR {
     constructor(message: string) {
         super(message);
     }   
 }
 
 
-module.exports = {MISSING_PARAMETERS, VERIFY_DOCUMENT}
+export {INVALID_PARAMETERS_ERROR, VERIFY_DOCUMENT_ERROR}
