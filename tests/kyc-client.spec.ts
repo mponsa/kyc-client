@@ -1,6 +1,6 @@
 
 
-import KYC from '../lib/kyc-client';
+import { KYC } from '../lib';
 import * as errors from '../lib/errors/errors';
 import axios from 'axios';
 

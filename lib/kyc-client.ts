@@ -4,7 +4,7 @@ import * as errors from './errors/errors'
 import { States } from './enums/enums'
 
 
-class KYC{
+export class KYC{
     _apiKey: string;
     _endpoint: string;
 
@@ -62,5 +62,3 @@ class KYC{
         return this._mapResult(response)
     }
 }
-
-export default KYC;

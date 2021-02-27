@@ -12,3 +12,6 @@ coverage
 
 # Visual Studio
 .vscode
+
+# Personal
+lib_usage.js
