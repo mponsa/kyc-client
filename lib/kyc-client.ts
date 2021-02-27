@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 const joi = require('joi');
-const url: string = process.env.ENDPOINT;
+const url: string = '';
 
 class KYC{
     _apiKey: string;
