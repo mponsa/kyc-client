@@ -79,7 +79,7 @@ describe("KYC Client test", () => {
 
         const client = new KYC('testKey','testEndpoint')
 
-        await expect(client.validate(payload)).rejects.toThrow()
+        await expect(client.validate(payload)).rejects.toThrow(errors.INVALID_PARAMETERS_ERROR)
     })
 
     it("Should fail with error indicating a failed response", async () => {
@@ -105,7 +105,7 @@ describe("KYC Client test", () => {
 
         const client = new KYC('testKey','testEndpoint')
 
-        await expect(client.validate(payload)).rejects.toThrow()
+        await expect(client.validate(payload)).rejects.toThrow(errors.VERIFY_DOCUMENT_ERROR)
     })
 
     it("Should fail with error indicating a failed response", async () => {
@@ -131,6 +131,6 @@ describe("KYC Client test", () => {
 
         const client = new KYC('testKey','testEndpoint')
 
-        await expect(client.validate(payload)).rejects.toThrow()
+        await expect(client.validate(payload)).rejects.toThrow(errors.VERIFY_DOCUMENT_ERROR)
     })
 })
