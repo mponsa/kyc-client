@@ -3,7 +3,7 @@ import joi from 'joi'
 import * as errors from './errors/errors' 
 import { States } from './enums/enums'
 
-const ENDPOINT: string = '';
+const ENDPOINT: string = 'https://australia-southeast1-reporting-290bc.cloudfunctions.net/driverlicence';
 
 class KYC{
     _apiKey: string;
@@ -30,14 +30,35 @@ class KYC{
         }
     }
 
-    validate = async(payload: Object): Promise<KYCResponse> => {
-        /* Receives user data and returns if user is valid or not */
-        const response: KYCResponse = {
-            kycResult: true
-        };
+    _getValidation = async (payload: Object): Promise<KYCResponse> => {
+        const headers = {
+            Authorization: `Bearer ${this._apiKey}`
+        }
+
+        const response = await axios.post(ENDPOINT,payload,{headers})
+
+        return response.data
+    }
+
+    _mapResult = (response: KYCResponse): KYCResult => {
+       const resultMap = new Map([['Y',true],['N',false]])
+       const errorMap = new Map([['D','Document Error'],['S','Server Error']])
+       
+       if(errorMap.has(response.verificationResultCode)){
+        const msg = errorMap.get(response.verificationResultCode)
+        throw new errors.VERIFY_DOCUMENT_ERROR(msg || '')
+        }
+
+       return { kycResult: resultMap.get(response.verificationResultCode) || false }
+    }
+
+    validate = async(payload: Object): Promise<KYCResult> => {
+        /* Receives user data and returns if user's driver licence is valid or not */
         this._validatePayload(payload)
 
-        return response
+        const response = await this._getValidation(payload)
+
+        return this._mapResult(response)
     }
 }
 
