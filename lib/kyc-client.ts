@@ -1,15 +1,16 @@
 import axios from 'axios'
-import joi from 'joi'
+import joi, { StringSchema } from 'joi'
 import * as errors from './errors/errors' 
 import { States } from './enums/enums'
 
-const ENDPOINT: string = 'https://australia-southeast1-reporting-290bc.cloudfunctions.net/driverlicence';
 
 class KYC{
     _apiKey: string;
+    _endpoint: string;
 
-    constructor(apiKey: string){
+    constructor(apiKey: string, endpoint: string){
         this._apiKey = apiKey;
+        this._endpoint = endpoint;
     }
 
     _validatePayload = (payload: Object): void => { 
@@ -35,7 +36,7 @@ class KYC{
             Authorization: `Bearer ${this._apiKey}`
         }
 
-        const response = await axios.post(ENDPOINT,payload,{headers})
+        const response = await axios.post(this._endpoint,payload,{headers})
 
         return response.data
     }

@@ -35,7 +35,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey')
+        const client = new KYC('testKey','testEndpoint')
 
         const res = await client.validate(payload)
 
@@ -63,7 +63,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey')
+        const client = new KYC('testKey','testEndpoint')
 
         const res = await client.validate(payload)
 
@@ -77,7 +77,7 @@ describe("KYC Client test", () => {
             middleName : "Robert"
         }
 
-        const client = new KYC('testKey')
+        const client = new KYC('testKey','testEndpoint')
 
         await expect(client.validate(payload)).rejects.toThrow()
     })
@@ -103,7 +103,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey')
+        const client = new KYC('testKey','testEndpoint')
 
         await expect(client.validate(payload)).rejects.toThrow()
     })
@@ -129,7 +129,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey')
+        const client = new KYC('testKey','testEndpoint')
 
         await expect(client.validate(payload)).rejects.toThrow()
     })
