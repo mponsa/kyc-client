@@ -1,3 +1,8 @@
+#Dotenv
 .env
 
+# Dependencies
 node_modules
+
+# TS Build
+dist

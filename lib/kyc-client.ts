@@ -1,6 +1,7 @@
 import axios from 'axios'
 import joi from 'joi'
 import * as errors from './errors/errors' 
+import { States } from './enums/enums'
 
 const ENDPOINT: string = '';
 
@@ -11,14 +12,14 @@ class KYC{
         this._apiKey = apiKey;
     }
 
-    _validatePayload = (payload: Payload): void => { 
+    _validatePayload = (payload: Object): void => { 
         const schema = joi.object({
             birthDate: joi.date().iso().required(),
             givenName: joi.string().max(100).required(),
             middleName: joi.string().max(100),
-            familiyName: joi.string().max(100).required(),
+            familyName: joi.string().max(100).required(),
             licenceNumber: joi.string().pattern(new RegExp('^[0-9]*$'), 'only numbers').required(),
-            stateOfIssue: joi.string().valid(Object.keys(States)).required(),
+            stateOfIssue: joi.string().valid(...Object.keys(States)).required(),
             expiryDate: joi.date().iso()
         })
 
@@ -29,13 +30,15 @@ class KYC{
         }
     }
 
-    validate = async(payload: Payload): Promise<KYCResponse> => {
+    validate = async(payload: Object): Promise<KYCResponse> => {
         /* Receives user data and returns if user is valid or not */
         const response: KYCResponse = {
-            kycResult: false
+            kycResult: true
         };
         this._validatePayload(payload)
 
         return response
     }
 }
+
+export default KYC;
