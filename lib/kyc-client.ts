@@ -13,7 +13,7 @@ class KYC{
         this._endpoint = endpoint;
     }
 
-    _validatePayload = (payload: Object): void => { 
+    _validatePayload = (payload: Record<string,unknown>): void => { 
         const schema = joi.object({
             birthDate: joi.date().iso().required(),
             givenName: joi.string().max(100).required(),
@@ -24,14 +24,14 @@ class KYC{
             expiryDate: joi.date().iso()
         })
 
-        const { error, value } = schema.validate(payload)
+        const { error } = schema.validate(payload)
 
         if(error){
             throw new errors.INVALID_PARAMETERS_ERROR(error.details.map((d: { message: string; }) => d.message).join(','))
         }
     }
 
-    _getValidation = async (payload: Object): Promise<KYCResponse> => {
+    _getValidation = async (payload: Record<string,unknown>): Promise<KYCResponse> => {
         const headers = {
             Authorization: `Bearer ${this._apiKey}`
         }
@@ -46,14 +46,14 @@ class KYC{
        const errorMap = new Map([['D','Document Error'],['S','Server Error']])
        
        if(errorMap.has(response.verificationResultCode)){
-        const msg = errorMap.get(response.verificationResultCode)
-        throw new errors.VERIFY_DOCUMENT_ERROR(msg || '')
+            const msg = errorMap.get(response.verificationResultCode)
+            throw new errors.VERIFY_DOCUMENT_ERROR(msg || '')
         }
 
        return { kycResult: resultMap.get(response.verificationResultCode) || false }
     }
 
-    validate = async(payload: Object): Promise<KYCResult> => {
+    validate = async(payload: Record<string,unknown>): Promise<KYCResult> => {
         /* Receives user data and returns if user's driver licence is valid or not */
         this._validatePayload(payload)
 
