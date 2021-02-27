@@ -6,3 +6,9 @@ node_modules
 
 # TS Build
 dist
+
+# Coverage reports
+coverage
+
+# Visual Studio
+.vscode
