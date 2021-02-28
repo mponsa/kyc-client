@@ -17,5 +17,11 @@ class VERIFY_DOCUMENT_ERROR extends KYC_ERROR {
     }   
 }
 
+class API_ERROR extends KYC_ERROR {
+    constructor(message: string) {
+        super(message);
+    }
+}
 
-export {INVALID_PARAMETERS_ERROR, VERIFY_DOCUMENT_ERROR}
+
+export {INVALID_PARAMETERS_ERROR, VERIFY_DOCUMENT_ERROR, API_ERROR}

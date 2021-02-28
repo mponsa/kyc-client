@@ -35,7 +35,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey','testEndpoint')
+        const client = new KYC('testKey')
 
         const res = await client.validate(payload)
 
@@ -63,7 +63,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey','testEndpoint')
+        const client = new KYC('testKey')
 
         const res = await client.validate(payload)
 
@@ -77,7 +77,7 @@ describe("KYC Client test", () => {
             middleName : "Robert"
         }
 
-        const client = new KYC('testKey','testEndpoint')
+        const client = new KYC('testKey')
 
         await expect(client.validate(payload)).rejects.toThrow(errors.INVALID_PARAMETERS_ERROR)
     })
@@ -103,7 +103,7 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey','testEndpoint')
+        const client = new KYC('testKey')
 
         await expect(client.validate(payload)).rejects.toThrow(errors.VERIFY_DOCUMENT_ERROR)
     })
@@ -129,8 +129,28 @@ describe("KYC Client test", () => {
                 }
             })
 
-        const client = new KYC('testKey','testEndpoint')
+        const client = new KYC('testKey')
 
         await expect(client.validate(payload)).rejects.toThrow(errors.VERIFY_DOCUMENT_ERROR)
+    }),
+
+    it("Should fail with error indicating an error from api", async () => {
+        const payload = {
+            birthDate : "1985-02-08",
+            givenName : "James",
+            middleName : "Robert",
+            familyName : "Smith",
+            licenceNumber : "94977000",
+            stateOfIssue : "NSW",
+            expiryDate : "2020-01-01"
+        }
+
+        mockedAxios.post.mockImplementation(() => {
+            throw new Error("Test error in api")
+        })
+
+        const client = new KYC('testKey')
+
+        await expect(client.validate(payload)).rejects.toThrow(errors.API_ERROR)
     })
 })

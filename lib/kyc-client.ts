@@ -3,14 +3,13 @@ import joi from 'joi'
 import * as errors from './errors/errors' 
 import { States } from './enums/enums'
 
+const ENDPOINT: string = 'https://australia-southeast1-reporting-290bc.cloudfunctions.net/driverlicence'
 
 export class KYC{
     _apiKey: string;
-    _endpoint: string;
 
-    constructor(apiKey: string, endpoint: string){
+    constructor(apiKey: string){
         this._apiKey = apiKey;
-        this._endpoint = endpoint;
     }
 
     _validatePayload = (payload: Record<string,unknown>): void => { 
@@ -36,9 +35,12 @@ export class KYC{
             Authorization: `Bearer ${this._apiKey}`
         }
 
-        const response = await axios.post(this._endpoint,payload,{headers})
-
-        return response.data
+        try{ 
+            const response = await axios.post(ENDPOINT,payload,{headers})
+            return response.data
+        }catch(error){
+            throw new errors.API_ERROR(`API Communication error: ${error.message}`)
+        }
     }
 
     _mapResult = (response: KYCResponse): KYCResult => {
