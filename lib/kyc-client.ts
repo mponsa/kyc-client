@@ -1,5 +1,5 @@
 import axios from 'axios'
-import joi, { StringSchema } from 'joi'
+import joi from 'joi'
 import * as errors from './errors/errors' 
 import { States } from './enums/enums'
 

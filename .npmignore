@@ -1,0 +1,8 @@
+tsconfig.json
+lib
+tests
+
+coverage
+.vscode
+
+lib_usage.js

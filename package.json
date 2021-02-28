@@ -1,9 +1,10 @@
 {
-  "name": "kyc-client",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
+  "name": "@asnopm/kyc-client",
+  "version": "1.0.8",
+  "description": "Know your customer validation through third-party API",
+  "main": "dist/index.js",
+  "types":"dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint . --ext .ts",
     "build": "tsc",
